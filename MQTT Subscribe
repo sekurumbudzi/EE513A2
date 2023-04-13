@@ -6,7 +6,7 @@
 
 //This is where I have replaced the example I.P address and username and password with my own
 #define ADDRESS     "tcp://192.168.0.227:1883"
-#define CLIENTID    "rpi2"
+#define CLIENTID    "BBB"
 #define AUTHMETHOD  "BB512"
 #define AUTHTOKEN   "password"
 #define TOPIC       "ee513/CPUTemp"
