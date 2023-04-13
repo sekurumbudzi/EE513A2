@@ -1,0 +1,10 @@
+int MainWindow::parseJSONData(QString str){
+   QJsonDocument doc = QJsonDocument::fromJson(str.toUtf8());
+   QJsonObject obj = doc.object();
+   QJsonObject sample = obj["sample"].toObject();
+   this->temperature = (float) sample["temperature"].toDouble();
+   this->humidity = (float) sample["humidity"].toDouble();
+   cout << "The current temperature is " << temperature << " and the current humidity is "
+    	<< humidity << endl;
+   return 0;
+}
