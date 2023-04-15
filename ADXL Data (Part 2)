@@ -12,9 +12,12 @@
 #define AUTHTOKEN   "password"
 #define TOPIC       "EE513/ADXL345Gravity"
 #define DEBUG        // Enable debug messages
- 
+#define LWTTopic   “status”
+#define LWTPayload “offline”
+#define LWTQOS      1
+
 int main(int argc, char* argv[]) {
-const char * MQTT_host = "192.168.0.227";
+const char * MQTT_client = "192.168.0.227";
 const int MQTT_port = 1883;
 const char * MQTT_user = "BB512";
 const char * MQTT_pwd = "password";
@@ -22,10 +25,7 @@ const char * MQTT_pwd = "password";
 // Topic
 const std::string tpcAcceleration = ADXL345 + "/acceleration";
  
-
-    MQTT.setAddress(MQTT_host, MQTT_port);
-    MQTT.setCredentials(MQTT_user, MQTT_pwd);
-}
+   }
  
 void MQTT_connect() {
     #ifdef DEBUG
@@ -52,11 +52,8 @@ void onMQTTDisconnect(AsyncMQTTClientDisconnectReason reason) {
  
 }
  
-
 void sensor_init() {
 
-  // Start communication with the ADXL345:
-  // Set up the sensor for reading data and estimate the acceleration
   int status = ADXL345.begin();
   if (status < 0)
   {
@@ -64,8 +61,6 @@ void sensor_init() {
     {
       yield();
     }
- 
- 
  
   #ifdef DEBUG
   delay(500);
@@ -77,8 +72,6 @@ void sensor_init() {
   _irq_active = true;
 }
  
-
- 
   {
     return;
   }
@@ -88,7 +81,7 @@ void loop() {
   
   if(_new_data)
   {
-    // Read data from the sensor
+
     IMU.readSensor();
     String ax = String(IMU.getAccelX_mss()),
            ay = String(IMU.getAccelY_mss()),
